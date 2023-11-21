@@ -1,0 +1,67 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    .profile {
+        width: 35%;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+        margin: 40px auto;
+    }
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+</style>
+
+
+<div class="profile">
+    <div style="font-size: 20px; font-family: Arial; background-color: #070708; color: white; padding: 5px;">{{user.first_name }}</div>
+    <table>
+        {% if user.last_name == "Patient" %}
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Consulting Doctor</th>
+            <th>Status</th>
+        </tr>
+        {% for ap in ap %}
+        <tr>
+            <th>{{ ap.date }}</th>
+            <th>{{ ap.time }}</th>
+            <th>{{ ap.doctor }}</th>
+            <th>{{ ap.status }}</th>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        {% if user.last_name == "Doctor" %}
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Patient</th>
+            <th>Status</th>
+        </tr>
+        {% for ap in ap %}
+        <tr>
+            <th>{{ ap.date }}</th>
+            <th>{{ ap.time }}</th>
+            <th>{{ ap.patient }}</th>
+            <th>{{ ap.status }}</th>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

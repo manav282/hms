@@ -1,0 +1,131 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    .profile {
+        width: fit-content;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+        margin: 40px auto;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px;
+        background-color: #070708;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+    }
+</style>
+<div class="profile">
+    <div style="font-size: 20px; font-family: Arial; background-color: #070708; color: white; padding: 5px;">Reception</div>
+
+    <!-- Total Appointments -->
+    <div
+        style="width: 28%; margin: 10px; display: inline-block; text-align: center; background-color: rgb(142, 248, 248);">
+        <h1>Total Appointments</h1>
+        <h1>{{ tot }}</h1>
+    </div>
+
+    <!-- Appointments Done -->
+    <div
+        style="width: 28%; margin: 50px; display: inline-block; text-align: center; background-color: rgb(149, 245, 245);">
+        <h1>Appointments Done</h1>
+        <h1>{{ com }}</h1>
+    </div>
+
+    <!-- Upcoming Appointments -->
+    <div
+        style="width: 28%; margin: 50px; display: inline-block; text-align: center; background-color: rgb(66, 240, 240);">
+        <h1>Upcoming Appointments</h1>
+        <h1>{{ pend }}</h1>
+    </div>
+
+    <div class='appt'>
+        <a href="{% url 'setapt' %}"><button style="margin-bottom: 10px;">New Appointment</button></a>
+        <table>
+            <tr style="background-color: black; color: white;">
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                <th>Consulting Doctor</th>
+                <th>Status</th>
+                <th>Remove</th>
+                <th>Update</th>
+            </tr>
+            {% for ap in ap %}
+            <tr>
+                <th>{{ ap.date }}</th>
+                <th>{{ ap.time }}</th>
+                <th>{{ ap.patient }}</th>
+                <th>{{ ap.doctor }}</th>
+                <th>{{ ap.status }}</th>
+                <form method="POST" action="{% url 'deleteapt' %}">
+                    {% csrf_token %}
+                    <input type='hidden' value="{{ ap.aid }}" name='aid'>
+                    <th><button type='submit' style="background-color: red;">Delete</button></th>
+                </form>
+                <form method="POST" action="{% url 'getapt' %}">
+                    {% csrf_token %}
+                    <input type='hidden' value="{{ ap.aid }}" name='aid'>
+                    <th><button type='submit' style="background-color: green;">Update</button></th>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class='pat'>
+        <a href="{% url 'crtpat' %}"><button style="margin-top: 10px;margin-bottom: 10px;">Create Patient</button></a>
+        <table>
+            <tr style="background-color: black; color: white;">
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Remove</th>
+                <th>Update</th>
+            </tr>
+            {% for p in p %}
+            <tr>
+                <th>{{ p.user.first_name }}</th>
+                <th>{{ p.phone }}</th>
+                <th>{{ p.user.email }}</th>
+                <th>{{ p.gender }}</th>
+                <th>{{ p.age }}</th>
+                <form method="POST" action="{% url 'deletepat' %}">
+                    {% csrf_token %}
+                    <input type='hidden' value="{{ p.pid }}" name='pid'>
+                    <th><button type='submit' style="background-color: red;">Delete</button></th>
+                </form>
+                <form method="POST" action="{% url 'updatepat' %}">
+                    {% csrf_token %}
+                    <input type='hidden' value="{{ p.pid }}" name='pid'>
+                    <th><button type='submit' style="background-color: green;">Update</button></th>
+            </tr>
+            </form>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

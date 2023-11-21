@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load mathfilters %}
+<style>
+    .profile {
+        width: fit-content;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+        margin: 40px auto;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+</style>
+<center>
+    <div class="profile">
+        <div style="text-align:left;font-size: 15px;font-family: arial;font-style: initial;">
+            <h1>INVOICE</h1>
+            <div>Date : {{ inv.date|date:"F d Y" }}</div>
+            <div>
+                Name of Patient : {{ inv.patient }}<br>
+                Phone : {{ inv.patient.phone }}<br>
+                Address : {{ inv.patient.address }}
+            </div>
+
+        </div>
+        <div style="text-align:left;font-family: arial;font-style: initial;padding: 5px;text-align: justify;">
+
+            <table>
+                <tr>
+                    <th>
+                        <h1>Total </h1>
+                    </th>
+                    <th>
+                        <h1>{{ inv.total }} Rs.</h1>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <h1>Paid </h1>
+                    </th>
+                    <th>
+                        <h1>{{ inv.paid }} Rs.</h1>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <h1>Tax </h1>
+                    </th>
+                    <th>
+                        <h1>{{ inv.paid|add:inv.outstanding|mul:0.05 }} Rs.</h1>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <h1>Outstanding </h1>
+                    </th>
+                    <th>
+                        <h1>{{ inv.outstanding }} Rs.</h1>
+                    </th>
+                </tr>
+            </table>
+            <div style="text-align:left;font-size: 15px;font-family: arial;font-style: initial;">
+                123 Main Street,<br>
+                City, State, Zip Code<br>
+                Country<br><br>
+                Contact Us<br>
+                payments@opera.com<br>
+                +917219120475
+            </div>
+        </div>
+    </div>
+</center>
+{% endblock %}

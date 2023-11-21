@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('../static/bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .heading {
+        font-size: 48px;
+        color: #070708;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 100px;
+        margin-bottom: 30px;
+    }
+
+    .info-block {
+        background-color: #ffffff;
+        border: 2px solid #070708;
+        padding: 20px;
+        border-radius: 10px;
+        margin: auto;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .registration-form {
+        width: 35%;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+    }
+
+    input,
+    select {
+        border: 2px solid #070708;
+        width: 250px;
+        margin: 10px;
+        text-align: center;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 4px;
+    }
+
+    input:hover {
+        cursor: pointer;
+    }
+
+    select {
+        width: 250px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="heading">Welcome to Opera Hospitals</h1>
+
+    <div class="info-block registration-form">
+        <form method="POST">
+            {% csrf_token %}
+            <h1 style="color: #070708; font-family: Arial;">Register</h1>
+            {% for m in messages %}
+            <p style="color: white;width: 250px;background-color: red;">{{m}}</p>
+            {% endfor %}
+            <select name="type">
+                <option value="Patient">Patient</option>
+                <option value="Doctor">Doctor</option>
+                <option value="HR">HR</option>
+                <option value="Reception">Reception</option>
+            </select><br>
+            <input type="text" placeholder="Full Name" name="fname" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="Phone Number" name="phone" required>
+            <input type="password" placeholder="Password" name="password1" required>
+            <input type="password" placeholder="Repeat Password" name="password2" required><br><br>
+            <a href="{% url 'login' %}">Already have an account? Sign-in now!</a><br>
+            <input type="submit"
+                style="background-color: #070708; color: white; border: none; border-radius: 25px; font-weight: bold;"
+                value="Register">
+        </form>
+        <a href="{% url 'home' %}" style="color: #070708; text-decoration: none;">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

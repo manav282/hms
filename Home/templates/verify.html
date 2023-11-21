@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url('../static/bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .heading {
+        font-size: 48px;
+        color: #070708;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 100px;
+        letter-spacing: 2px;
+    }
+
+    .form-container {
+        width: 35%;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+    }
+
+    input {
+        border: 2px solid #070708;
+        width: 250px;
+        margin: 10px;
+        text-align: center;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 4px;
+    }
+
+    input:hover {
+        cursor: pointer;
+    }
+</style>
+
+<div class="container">
+    <h1 class="heading">Welcome to Opera Hospitals</h1>
+    <center>
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                <h1 style="color: #070708; font-family: Arial;">Verify OTP</h1>
+                <p style="color: #070708;">A 6-digit OTP has been sent to your email:<br>
+                    {{user.username}}</p>
+                <input type="text" name="otp" placeholder="ENTER OTP">
+                {% for m in messages %}
+                <p style="color: red; width: 250px; background-color: white;">{{m}}</p>
+                {% endfor %}
+                <input type="submit" name="submit1" value="Submit"
+                    style="background-color: #070708; color: white; border: none; border-radius: 25px; font-weight: bold;">
+                <input type="submit" name="resend" value="Resend OTP"
+                    style="background-color: #070708; color: white; border: none; border-radius: 25px; font-weight: bold;">
+            </form>
+        </div>
+    </center>
+</div>
+{% endblock %}

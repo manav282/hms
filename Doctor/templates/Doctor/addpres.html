@@ -1,0 +1,66 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    .profile {
+        width: fit-content;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+        margin: 40px auto;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px;
+        background-color: #070708;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+<div class="profile">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Patient:</th>
+                <th>
+                    <select name='pat'>
+                        {% for p in p %}
+                        <option value="{{p}}">{{p}}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+            </tr>
+            <tr>
+                <th>Prescription:</th>
+                <th><textarea name='pres'></textarea></th>
+            </tr>
+            <tr>
+                <th>Disease:</th>
+                <th><input type="text" name='dis'></th>
+            </tr>
+        </table>
+        <button type="submit">Add</button>
+    </form>
+</div>
+{% endblock %}

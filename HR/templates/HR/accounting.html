@@ -1,0 +1,104 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    .profile {
+        width: fit-content;
+        top: 50%;
+        font-weight: bold;
+        padding: 10px;
+        border: 2px solid #070708;
+        background-color: white;
+        margin: 40px auto;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px;
+        background-color: #070708;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+    }
+</style>
+<div class="profile">
+    <div style="height: 45%;border: 1px solid black;margin: 10px;">
+        <form method="POST" action='{% url "accounting" %}'>
+            {%csrf_token%}
+            <table>
+                <tr>
+                    <th>Patient:</th>
+                    <th><select name="pat">
+                            {% for p in p %}
+                            <option value="{{p}}">{{p}}</option>
+                            {%endfor%}
+                        </select></th>
+                </tr>
+                <tr>
+                    <th>Paid:</th>
+                    <th><input type="number" name='paid'></th>
+                </tr>
+                <tr>
+                    <th>Outstanding:</th>
+                    <th><input type="number" name='out'></th>
+                </tr>
+            </table>
+            <center>
+                <button type="submit" style="width: 50%;">Create Invoice</button>
+            </center>
+        </form>
+    </div>
+
+    <div class='pat' style="height: 50%;">
+        <button style="width: 100%;margin-top: 10px;margin-bottom: 10px;">Consultation's Outstandings</button>
+        <center>
+            <table style="text-align: center;">
+                <tr style="background-color: black;color: white;text-align: center;">
+                    <th>Date</th>
+                    <th>Patient Name</th>
+                    <th>Paid</th>
+                    <th>Outstanding</th>
+                    <th>Total</th>
+                    <th>Invoice</th>
+                    <th>Remainder</th>
+                </tr>
+                {% for payt in payt %}
+                <tr>
+                    <th>{{payt.date|date:"F d Y"}}</th>
+                    <th>{{payt.patient}}</th>
+                    <th>{{payt.paid}}</th>
+                    <th>{{payt.outstanding}}</th>
+                    <th>{{payt.total}}</th>
+                    <form method="POST" action="{% url 'show' %}">
+                        {%csrf_token%}
+                        <input type='hidden' value="{{ payt.pmid }}" name='pid'>
+                        <th><button type='submit'>Show Invoice</button></th>
+                    </form>
+                    <form method="POST" action="{% url 'send' %}">
+                        {%csrf_token%}
+                        <input type='hidden' value="{{ payt.pmid }}" name='pid'>
+                        <th><button type='submit' style="padding: 10px;font-size: 14px;">Send Remainder</button></th>
+                    </form>
+                </tr>
+                </form>
+                {% endfor %}
+            </table>
+        </center>
+    </div>
+</div>
+{% endblock %}

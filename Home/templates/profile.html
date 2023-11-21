@@ -1,0 +1,80 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    input,
+    select {
+        border: 2px solid #070708;
+        width: 250px;
+        margin: 10px;
+        text-align: center;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        width: 300px;
+        margin: 10px;
+        padding: 10px;
+        font-size: 18px;
+        background-color: #070708;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+    }
+</style>
+<div class="profile">
+    <div style="font-size: 20px; font-family: Arial; background-color: #070708; color: white; padding: 5px;">{{user.first_name }}</div>
+    <table>
+        <tr>
+            <th>Name:</th>
+            <th>{{ user.first_name }}</th>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <th>{{ user.email }}</th>
+        </tr>
+        <tr>
+            <th>Phone:</th>
+            <th> {{ pro.phone }}</th>
+        </tr>
+        <tr>
+            <th>Gender:</th>
+            <th> {{ pro.gender }}</th>
+        </tr>
+        <tr>
+            <th>Age:</th>
+            <th> {{ pro.age }}</th>
+        </tr>
+        {% if pro.user.last_name == "Patient" %}
+        <tr>
+            <th>Address:</th>
+            <th>{{ pro.address }}</th>
+        </tr>
+        <tr>
+            <th>Blood Group:</th>
+            <th>{{ pro.bloodgroup }}</th>
+        </tr>
+        <tr>
+            <th>Case Paper:</th>
+            <th>{{ pro.casepaper }}</th>
+        </tr>
+    </table>
+    <a href="{{ pro.image.url }}"><input type="submit"
+            style='width:300px;font-size:18px;padding:10px;background-color: #070708;color: white;border: none;border-radius: 25px;font-weight: bold;'
+            value="Medical Report"></a>
+    <a href="{% url 'uprofile' %}"><input type="submit"
+            style='width:300px;font-size:18px;padding:10px;background-color: #070708;color: white;border: none;border-radius: 25px;font-weight: bold;'
+            value="Update Profile"></a>
+    {%endif%}
+    {% if pro.user.last_name == "Doctor" %}
+    <tr>
+        <th>Department:</th>
+        <th>{{ pro.Department }}</th>
+    </tr>
+    {%endif%}
+    </table>
+</div>
+{% endblock %}

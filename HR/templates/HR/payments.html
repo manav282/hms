@@ -1,0 +1,53 @@
+{% extends 'base2.html' %}
+{% block content %}
+<style>
+
+    table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid #070708;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px;
+        background-color: #070708;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+    }
+</style>
+<div class="profile">
+<center>
+    <table style="text-align: center;">
+        <tr style="background-color: black;color: white;text-align: center;">
+            <th>Paid</th>
+            <th>Outstanding</th>
+            <th>Date</th>
+            <th>Invoice</th>
+        </tr>
+        {% for payt in payt %}
+        <tr>
+            <th>{{payt.outstanding}}</th>
+            <th>{{payt.paid}}</th>
+            <th>{{payt.date|date:"F d Y"}}</th>
+            <form method="POST" action="{% url 'show' %}">
+                {%csrf_token%}
+                <input type='hidden' value="{{ payt.pmid }}" name='pid'>
+                <th><button type='submit' style="padding: 10px;font-size: 14px;">Show Invoice</button></th>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+</center>
+</div>
+{%endblock%}

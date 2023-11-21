@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-image: url('../static/bg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .heading {
+            font-size: 48px;
+            color: #070708;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 100px;
+            letter-spacing: 2px;
+        }
+
+        .profile {
+            width: 35%;
+            top: 50%;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #070708;
+            background-color: white;
+            margin: 40px auto;
+        }
+
+        .tabs {
+            margin-top: 5px;
+        }
+
+        .tab {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .tab a {
+            text-decoration: none;
+            color: #070708;
+            font-size: 18px;
+            background-color: #ffffff;
+            border: 2px solid #070708;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tab a:hover {
+            background-color: #070708;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class='main'>
+            <h1 class="heading">Welcome to Opera Hospitals</h1>
+            <div class='tabs'>
+                {% if user.last_name == "Reception" %}
+                <div class="tab"><a href="{% url 'reception' %}">Dashboard</a></div>
+                {% endif %}
+                {% if user.last_name == "HR" %}
+                <div class="tab"><a href="{% url 'dashboard' %}">Dashboard</a></div>
+                <div class="tab"><a href="{% url 'accounting' %}">Accounting</a></div>
+                {% endif %}
+                {% if user.last_name == "Doctor" %}
+                <div class="tab"><a href="{% url 'profile' %}">Profile</a></div>
+                <div class="tab"><a href="{% url 'appointments' %}">Appointments</a></div>
+                <div class="tab"><a href="{% url 'pres' %}">Prescriptions</a></div>
+                <div class="tab"><a href="{% url 'uprofile' %}">Update Profile</a></div>
+                {% endif %}
+                {% if user.last_name == "Patient"%}
+                <div class="tab"><a href="{% url 'profile' %}">Profile</a></div>
+                <div class="tab"><a href="{%url 'appointments'%}">Appointments</a></div>
+                <div class="tab"><a href="{% url 'payments' %}">Invoice & Payments</a></div>
+                <div class="tab"><a href="{% url 'history' %}">Medical History</a></div>
+                <div class="tab"><a href="{% url 'uprofile' %}">Update Profile</a></div>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div class="tab"><a href="{% url 'logout' %}">Logout</a></div>
+                {% else %}
+                <div class="tab"><a href="{% url 'home' %}">Home</a></div>
+                <div class="tab"><a href="{% url 'login' %}">Login</a></div>
+                <div class="tab"><a href="{% url 'register' %}">Register</a></div>
+                {% endif %}
+            </div>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </center>
+</body>
+
+</html>
